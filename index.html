@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crypto Search Space ™ 2.4</title>
+  
+
+  <link rel="shortcut icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgaBOMXtkRLv67p2cUvqeKJuxiSDgQSY0DOapITc0C6c1Gkg8Nxa2CqPmRy4X6p0rcVnvZ5OWTAxs2IPc6jfMSzzjepPDqn8IAMTKj9y3H618l2hGQciVmU4upCYoZ-2jjofbmqmvnSPm15B-Smr6-bel4GOjy1HQtYnu93r-GOV1GNnK46538MhlX5p_po/s320/IMG_20250703_172852_909.jpg" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+
+   <style>
+   
+.download-app {
+  display: block;
+  background: #5384ee;
+  color: #fbfcff;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.download-app:hover {
+  background: #0983e0;
+}
+  body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #0f0f0f;
+      color: #fff;
+    }
+    .logo {
+      margin-top: 20px;
+    }
+    .logo img {
+      width: 100px; /* এখানে সাইজ ঠিক করতে পারবেন */
+      border-radius: 10px;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+footer {
+  position: 20%;      /* page bottom এ fixed থাকবে */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 8px 0;       /* আগের 15px থেকে 8px করে ছোট করা হলো */
+  font-size: 13px;      /* font-size ছোট করা হলো */
+  box-sizing: border-box;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 8px;
+  font-size: 13px;      /* link text ছোট করা হলো */
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+  :root{
+      --bg-dark:#0f1117; --bg-card:#151823; --text:#e5e7eb; --muted:#9ca3af; --accent:#22c55e; --warn:#f59e0b; --danger:#ef4444; --brand:#60a5fa;
+      --notice-height:44px; --gap:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;background:var(--bg-dark);color:var(--text);-webkit-font-smoothing:antialiased}
+
+    /* Notice Bar */
+    .notice-bar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#4ef505;color:#000;padding:10px 14px;font-weight:700;text-align:center;line-height:1.2}
+    .notice-bar a{color:#000;text-decoration:underline}
+
+    .app{display:flex;min-height:100vh;padding-top:var(--notice-height)}
+
+    /* Sidebar */
+    .sidebar{width:260px;background:var(--bg-card);padding:22px 18px;position:sticky;top:var(--notice-height);height:calc(100vh - var(--notice-height));border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:10px}
+    .sidebar h1{font-size:18px;margin:0 0 6px 0;line-height:1.2}
+    .sidebar .menu{display:flex;flex-direction:column;gap:10px}
+    .sidebar button,.sidebar a{display:block;width:100%;padding:12px 14px;border:none;border-radius:12px;background:#1f2430;color:var(--text);text-decoration:none;font-weight:600;cursor:pointer;transition:transform .06s ease, box-shadow .2s ease}
+    .sidebar button:hover,.sidebar a:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    .sidebar .upgrade-btn{background:linear-gradient(90deg,#0861e6,#0bbe4d);color:#001b0c}
+    .sidebar .support{background:linear-gradient(90deg,#0861e6,#0bbe4d);color:#001b0c}
+    .sidebar .withdraw{background:linear-gradient(90deg,#0861e6,#0bbe4d);color:#001b0c}
+
+    /* Main */
+    .main{flex:1;padding:24px}
+    .header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .blockchains label{background:#1f2430;border:1px solid rgba(255,255,255,.06);padding:6px 10px;border-radius:10px;margin-right:8px;display:inline-flex;gap:6px;align-items:center}
+    .blockchains label img{height:18px}
+    .status-line{color:var(--warn);font-weight:700}
+
+    /* Ticker */
+    .ticker-wrap{position:relative;overflow:hidden;background:#11162a;border:1px solid rgba(255,255,255,.06);border-radius:12px}
+    .ticker{display:inline-block;padding-left:100%;white-space:nowrap;animation:ticker 18s linear infinite}
+    .ticker span{display:inline-block;padding:10px 24px;color:#cbd5e1}
+    @keyframes ticker{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-100%,0,0)}}
+
+    /* Live Feed */
+    .live-panel{display:flex;gap:16px;align-items:stretch;margin-top:10px}
+    .live-card{flex:1;background:#11162a;border:1px solid rgba(255,255,255,.06);border-radius:12px}
+    .live-card header{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);font-weight:700;display:flex;gap:8px;align-items:center}
+    .live-body{max-height:160px;overflow:auto;padding:8px 10px}
+    .live-item{padding:8px 10px;border-bottom:1px dashed rgba(255,255,255,.06);font-size:14px;display:flex;justify-content:space-between;gap:8px}
+    .live-item .who{color:#93c5fd;font-weight:700}
+    .live-item .amt{color:#0cad72;font-weight:800}
+    .live-item .chain{color:#fbbf24;font-weight:700}
+
+    /* Stats */
+    .stats{margin:12px 0 16px 0;font-weight:600}
+    .stats span{margin-right:10px}
+
+   /* Wallet list */
+.wallets {
+  background:#53cfee;
+  border:1px solid rgba(234, 241, 170, 0.06);
+  border-radius:16px;
+  height:220px;          /* Fixed height */
+  max-height:220px;      /* Prevent growing */
+  min-height:220px;      /* Prevent shrinking */
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  overflow-y:auto;       /* Scrollbar if content exceeds */
+}
+
+.wallets .row {
+  padding:8px 10px;
+  border-bottom:1px solid rgb(136, 5, 243);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  justify-content:space-between;
+}
+
+.wallets .row .addr {
+  opacity:.85;
+  word-break:break-all;
+}
+
+    /* Bottom buttons */
+    .bottom{display:flex;gap:10px;margin-top:14px}
+    .btn{background:#22c55e;border:none;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}
+    .btn-stop{background:#ef4444;border:none;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}
+    .btn-withdraw{background:#0bf517;border:none;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}
+
+    /* Plans popup */
+    #planPopupOverlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:9998}
+    #planPopup{width:min(620px,92vw);background:#0f1427;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px}
+    #planPopup h2{margin:6px 0 12px 0}
+    #plansList{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+    #plansList label{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#11162a;border:1px solid rgba(255,255,255,.06);padding:10px;border-radius:12px}
+    #priceDisplay{margin:8px 0 10px 0;font-weight:800}
+    #qrCode img{max-width:180px;border-radius:12px}
+    #qrCode code{user-select:all}
+    #planPopup .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    #payNowBtn,#closePopupBtn{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+    #payNowBtn{background:#22c55e}
+    #closePopupBtn{background:#374151;color:#e5e7eb}
+
+    /* Floating coins bg */
+    .coins-bg{position:fixed;inset:0;pointer-events:none;opacity:.15}
+    .coin{position:absolute;top:-80px;width:40px;height:40px;background-size:contain;background-repeat:no-repeat;animation:float 12s linear infinite}
+    @keyframes float{0%{transform:translateY(-80px)}100%{transform:translateY(110vh)}}
+
+    /* ========== Mobile Responsive ========== */
+    @media (max-width: 768px) {
+      .app {flex-direction:column}
+
+      /* Make notice height dynamic via JS, but provide safe fallback */
+      .sidebar{width:100%;height:auto;position:relative;top:0;border-right:none;border-bottom:1px solid rgba(255,255,255,.06);flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;padding:10px}
+      .sidebar h1{flex:1 1 100%;font-size:16px;text-align:center;margin-bottom:6px}
+      .sidebar .menu{flex-direction:row;flex-wrap:wrap;gap:8px;justify-content:center}
+      .sidebar button,.sidebar a{flex:1 1 calc(50% - 12px);margin:4px;font-size:14px;padding:10px;border-radius:10px}
+
+      .main{padding:14px}
+      .header{flex-direction:column;align-items:flex-start;gap:10px}
+      .blockchains label{margin-bottom:6px;font-size:14px}
+
+      .live-panel{flex-direction:column}
+      .live-card{width:100%}
+
+      .wallets .row{font-size:13px;flex-direction:column;align-items:flex-start;gap:6px}
+
+      .bottom{flex-direction:column}
+      .bottom button{width:100%}
+
+      #planPopup{width:95vw;padding:12px}
+      #plansList{grid-template-columns:1fr}
+
+      .coins-bg{opacity:.06}
+      .coin{width:28px;height:28px}
+
+      /* Adjust ticker speed & spacing on small screens to avoid wrapping issues */
+      .ticker{animation-duration:28s}
+      .ticker span{padding:8px 12px}
+
+      /* increase touch targets for inputs */
+      .blockchains input{width:18px;height:18px}
+    }
+
+    /* Small improvement for accessibility: focus and active states */
+    .sidebar button:focus,.sidebar a:focus,.btn:focus,#payNowBtn:focus,#closePopupBtn:focus{outline:3px solid rgba(96,165,250,.18);outline-offset:2px}
+  
+  
+  /* Overlay background */
+#keyPopup {
+  position: fixed;
+  inset: 0; /* top:0; bottom:0; left:0; right:0 */
+  display: none; /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7); /* semi-transparent dark background */
+  z-index: 9999;
+}
+
+/* Popup box */
+#keyPopup .popup-content {
+  background: #11162a; /* dark card background */
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  color: #e5e7eb;
+  animation: popupFade 0.3s ease;
+}
+
+/* Animation */
+@keyframes popupFade {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Heading */
+#keyPopup h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+/* Input field */
+#blockchainKeyInput {
+  width: 80%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #444;
+  font-size: 16px;
+  margin-bottom: 16px;
+  background: #1f2430;
+  color: #fff;
+  text-align: center;
+}
+
+/* Buttons */
+#submitKeyBtn, #closeKeyPopup {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+/* Submit Button */
+#submitKeyBtn {
+  background: linear-gradient(90deg, #0861e6, #0bbe4d);
+  color: #fff;
+}
+
+/* Submit hover */
+#submitKeyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Close Button */
+#closeKeyPopup {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* Close hover */
+#closeKeyPopup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Responsive */
+@media(max-width: 500px){
+  #keyPopup .popup-content { padding: 16px; }
+  #blockchainKeyInput { width: 100%; }
+}
+  
+  </style>
+  
+  
+  
+   <meta name="description" content="Crypto Search Space ™ 2.0 – Discover lost & hidden crypto wallets easily. Scan BTC, ETH, BNB, DOGE & more with real-time wallet checking, persistence, and secure upgrades.">
+
+  <!-- Keywords -->
+  <meta name="keywords" content="Crypto Search Space, Crypto Search Space 2.0, crypto wallet scanner, lost crypto wallet, hidden crypto wallets, bitcoin wallet finder, ethereum wallet checker, BNB wallet search, DOGE wallet scanner, crypto recovery tool, wallet balance checker, blockchain wallet search, crypto wallet recovery software, forgotten wallet finder, crypto address scanner">
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Language -->
+  <meta name="language" content="English">
+
+  <!-- Author -->
+  <meta name="author" content="Crypto Search Space ™ 2.3">
+
+  <meta name="description" content="Crypto Search Space ™ 2.0 – Discover lost & hidden crypto wallets easily. Scan BTC, ETH, BNB, DOGE & more with real-time wallet checking, persistence, and secure upgrades.">
+
+  <!-- Keywords -->
+  <meta name="keywords" content="Crypto Search Space, Crypto Search Space 2.0, crypto wallet scanner, lost crypto wallet, hidden crypto wallets, bitcoin wallet finder, ethereum wallet checker, BNB wallet search, DOGE wallet scanner, crypto recovery tool, wallet balance checker, blockchain wallet search, crypto wallet recovery software, forgotten wallet finder, crypto address scanner">
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Language -->
+  <meta name="language" content="English">
+
+  <!-- Author -->
+  <meta name="author" content="Crypto Search Space ™ 2.0">
+
+  <!-- Open Graph (Facebook / Telegram Preview) -->
+  <meta property="og:title" content="Crypto Search Space ™ 2.4" />
+  <meta property="og:description" content="Advanced crypto wallet scanner to discover lost & hidden wallets across BTC, ETH, BNB, DOGE and more." />
+  <meta property="og:image" content="https://cryptosearchspace.com/preview-image.jpg" />
+  <meta property="og:url" content="https://cryptosearchspace.com" />
+  <meta property="og:type" content="website" />
+
+  
+  
+  
+  
+    
+</head>
+<link rel="shortcut icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgaBOMXtkRLv67p2cUvqeKJuxiSDgQSY0DOapITc0C6c1Gkg8Nxa2CqPmRy4X6p0rcVnvZ5OWTAxs2IPc6jfMSzzjepPDqn8IAMTKj9y3H618l2hGQciVmU4upCYoZ-2jjofbmqmvnSPm15B-Smr6-bel4GOjy1HQtYnu93r-GOV1GNnK46538MhlX5p_po/s320/IMG_20250703_172852_909.jpg" type="image/x-icon" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ku1Y..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<body>
+  <div class="logo">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgaBOMXtkRLv67p2cUvqeKJuxiSDgQSY0DOapITc0C6c1Gkg8Nxa2CqPmRy4X6p0rcVnvZ5OWTAxs2IPc6jfMSzzjepPDqn8IAMTKj9y3H618l2hGQciVmU4upCYoZ-2jjofbmqmvnSPm15B-Smr6-bel4GOjy1HQtYnu93r-GOV1GNnK46538MhlX5p_po/s320/IMG_20250703_172852_909.jpg" alt="Website Logo">
+  </div>
+  
+    
+    
+  <div class="notice-bar">⚠️ For any questions and purchase DM <a href="https://t.me/cryptos_search_admin" target="_blank">Admin</a></div>
+
+  <!-- floating coins -->
+  <div class="coins-bg" aria-hidden="true">
+    <div class="coin" style="left:5%; animation-delay:0s; background-image:url('https://cryptologos.cc/logos/bitcoin-btc-logo.png');"></div>
+    <div class="coin" style="left:15%; animation-delay:4s; background-image:url('https://cryptologos.cc/logos/bitcoin-btc-logo.png');"></div>
+    <div class="coin" style="left:25%; animation-delay:2s; background-image:url('https://cryptologos.cc/logos/ethereum-eth-logo.png');"></div>
+    <div class="coin" style="left:35%; animation-delay:6s; background-image:url('https://cryptologos.cc/logos/ethereum-eth-logo.png');"></div>
+    <div class="coin" style="left:45%; animation-delay:1s; background-image:url('https://cryptologos.cc/logos/binance-coin-bnb-logo.png');"></div>
+    <div class="coin" style="left:55%; animation-delay:5s; background-image:url('https://cryptologos.cc/logos/binance-coin-bnb-logo.png');"></div>
+    <div class="coin" style="left:65%; animation-delay:3s; background-image:url('https://cryptologos.cc/logos/dogecoin-doge-logo.png');"></div>
+    <div class="coin" style="left:75%; animation-delay:7s; background-image:url('https://cryptologos.cc/logos/dogecoin-doge-logo.png');"></div>
+    <div class="coin" style="left:85%; animation-delay:2s; background-image:url('https://cryptologos.cc/logos/tether-usdt-logo.png');"></div>
+    <div class="coin" style="left:95%; animation-delay:6s; background-image:url('https://cryptologos.cc/logos/tether-usdt-logo.png');"></div>
+  </div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h1>Crypto Search Space ™ 2.4</h1>
+      
+      <button id="withdrawSidebarBtn" href="javascript:void(0)" class="withdraw">💸 Withdraw</button>
+      <a class="support" href="https://t.me/cryptos_search_admin" target="_blank">📩 Support</a>
+      <a class="upgrade-btn" id="blockchainKeyBtn" href="javascript:void(0)">🔓 Blockchain Key</a>
+      <a class="download-app" href="https://cryptosearchspace.com/downloads/Crypto%20Search%20Space%20%E2%84%A2%202.0.apk" download>📥 Download App</a>
+    </aside>
+
+
+    <!-- POPUP -->
+<div id="keyPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h3>Enter 8-Digit Blockchain Key</h3>
+    <input type="text" id="blockchainKeyInput" maxlength="8" placeholder="Enter 8 digit key" />
+    <div class="popup-buttons">
+      <button id="submitKeyBtn">Submit</button>
+      <button id="closeKeyPopup">Cancel</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="header">
+        <div class="blockchains">
+          <label><input type="checkbox" value="BTC" checked> <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCBTC--600.png" style="height:18px"> BTC</label>
+          <label><input type="checkbox" value="ETH"> <img src="https://static1.tokenterminal.com//ethereum/logo.png?logo_hash=fd8f54cab23f8f4980041f4e74607cac0c7ab880" style="height:18px"> ETH</label>
+          <label><input type="checkbox" value="BNB"> <img src="https://static1.tokenterminal.com//bsc/products/bsc/logo.png" style="height:18px"> BNB</label>
+          <label><input type="checkbox" value="SOL"> <img src="data:image/jpeg;base64,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" style="height:18px"> SOL</label>
+          <label><input type="checkbox" value="DOGE"> <img src="https://png.pngtree.com/png-vector/20220421/ourmid/pngtree-dogecoin-crypto-currency-gold-coin-png-vector-design-png-image_4550948.png" style="height:18px"> DOGE</label>
+          <label><input type="checkbox" value="USDT"> <img src="data:image/png;base64,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" style="height:18px"> USDT</label>
+        </div>
+        <div class="status-line">Status: TRIAL VERSION</div>
+      </div>
+
+      <!-- Safer marquee replacement -->
+      <div class="ticker-wrap" aria-live="polite">
+        <div class="ticker" id="safetyTicker">
+          <span>⚠️ You can purchase the premium version directly within the software. Do not message anyone to get the premium version. If you do, you risk getting scammed.</span>
+        </div>
+      </div>
+
+      <!-- Live feed row: LEFT = Recently Found (fake random user status), RIGHT = (optional) Tips -->
+      <div class="live-panel">
+        <section class="live-card" id="recentFoundCard">
+          <header>🔥 Recently Found (live feed)</header>
+          <div class="live-body" id="liveFeed"></div>
+        </section>
+        <section class="live-card">
+          <header>💡 Tips</header>
+          <div class="live-body">
+            <div class="live-item"><span>Enable at least 2 chains for faster results.</span><span></span></div>
+            <div class="live-item"><span>Premium reveals full wallet address when balance is found.</span><span></span></div>
+            <div class="live-item"><span>Use the Blockchain Key button to buy safely.</span><span></span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        🔄 Checked: <span id="checkedCount">0</span>
+        | ✅ Found: <span id="foundCount">0</span> ($<span id="foundValue">0.00</span>)
+      </div>
+
+      <!-- Wallet stream -->
+      <div class="wallets" id="walletList"></div>
+
+      <div class="bottom">
+        <button class="btn" id="startBtn">▶️ Start</button>
+        <button class="btn-stop" id="stopBtn" disabled>■ Stop</button>
+        <button class="btn-withdraw" id="withdrawBottomBtn">💸 Withdraw</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Plan Popup -->
+  <div id="planPopupOverlay">
+    <div id="planPopup">
+      <h2>Select Your Plan</h2>
+      <div id="plansList"></div>
+      <div id="priceDisplay">Price: $0</div>
+      <div id="qrCode"></div>
+      <div class="actions">
+        <button id="payNowBtn" disabled>Pay Now</button>
+        <button id="closePopupBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+ <script> 
+   const blockchainKeyBtn = document.getElementById("blockchainKeyBtn");
+const keyPopup = document.getElementById("keyPopup");
+const closeKeyPopup = document.getElementById("closeKeyPopup");
+const submitKeyBtn = document.getElementById("submitKeyBtn");
+const blockchainKeyInput = document.getElementById("blockchainKeyInput");
+
+if (blockchainKeyBtn) {
+  blockchainKeyBtn.addEventListener("click", function() {
+    keyPopup.style.display = "flex";
+  });
+}
+
+if (closeKeyPopup) {
+  closeKeyPopup.addEventListener("click", function() {
+    keyPopup.style.display = "none";
+  });
+}
+
+if (submitKeyBtn) {
+  submitKeyBtn.addEventListener("click", function() {
+    const key = blockchainKeyInput.value.trim();
+
+    if (/^\d{8}$/.test(key)) {
+      alert("✅ Key Accepted: " + key);
+      keyPopup.style.display = "none";
+    } else {
+      alert("❌ Please enter valid 8 digit number key!");
+    }
+  });
+}
+ </script>
+  <script>
+    // =================== DOM HOOKS ===================
+    const walletList = document.getElementById('walletList');
+    const checkedCount = document.getElementById('checkedCount');
+    const foundCount = document.getElementById('foundCount');
+    const foundValueElem = document.getElementById('foundValue');
+
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    
+
+    const upgradeNowBtn = document.getElementById('upgradeNowBtn');
+    const withdrawSidebarBtn = document.getElementById('withdrawSidebarBtn');
+    const withdrawBottomBtn = document.getElementById('withdrawBottomBtn');
+
+    const planPopupOverlay = document.getElementById('planPopupOverlay');
+    const plansListDiv = document.getElementById('plansList');
+    const priceDisplay = document.getElementById('priceDisplay');
+    const qrCodeDiv = document.getElementById('qrCode');
+    const payNowBtn = document.getElementById('payNowBtn');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+
+    const liveFeed = document.getElementById('liveFeed');
+
+    // =================== STATE ===================
+    let checked = 0, found = 0, foundValue = 0, intervalId = null;
+
+    const plans = [
+      {name: 'One blockchain', price: 199},
+      {name: 'Two blockchains', price: 399},
+      {name: 'Three blockchains', price: 599},
+      {name: 'Four blockchains', price: 799},
+      {name: 'Five blockchains', price: 999},
+      {name: 'Six blockchains', price: 1199},
+      {name: 'Seven blockchains', price: 1399},
+      {name: 'Eight blockchains', price: 1599},
+      {name: 'Nine blockchains', price: 1799}
+    ];
+
+    const paymentAddress = "0x56169808ee926359c3403c2049d77c574b40db32"; // BNB (Smart Chain)
+
+    // =================== PERSISTENCE ===================
+    function saveData(){
+      localStorage.setItem('found', String(found));
+      localStorage.setItem('foundValue', String(foundValue));
+      localStorage.setItem('walletsHTML', walletList.innerHTML);
+    }
+    function loadData(){
+      found = parseInt(localStorage.getItem('found') || '0', 10);
+      foundValue = parseFloat(localStorage.getItem('foundValue') || '0');
+      walletList.innerHTML = localStorage.getItem('walletsHTML') || '';
+      foundCount.textContent = String(found);
+      foundValueElem.textContent = foundValue.toFixed(2);
+    }
+
+    // =================== CORE LOGIC ===================
+    function getSelectedChains(){
+      return Array.from(document.querySelectorAll('.blockchains input[type="checkbox"]:checked')).map(cb => cb.value);
+    }
+    function randomString(n){
+      return Array(n).fill(0).map(() => Math.random().toString(36).slice(2,3)).join('');
+    }
+    function generateWalletAddress(chain){
+      if(chain==='BTC') return '1'+randomString(33);
+      if(chain==='DOGE') return 'D'+randomString(33);
+      if(['ETH','BNB','MATIC'].includes(chain)) return '0x'+Math.random().toString(16).slice(2).padEnd(40,'0').slice(0,40);
+      return '0x56169808ee926359c3403c2049d77c574b40db32';
+    }
+    function getRandomBalance(){
+      const min=100, max=999; return (Math.random()*(max-min)+min).toFixed(2);
+    }
+
+    function startSearch(){
+      if(intervalId) return;
+      const chains = getSelectedChains();
+      if(!chains.length){ alert('Select at least one chain'); return; }
+      startBtn.disabled = true; stopBtn.disabled = false;
+
+      intervalId = setInterval(()=>{
+        checked++; checkedCount.textContent = String(checked);
+
+// Example word list (shortened, আপনি চাইলে BIP39 পূর্ণ wordlist বসাতে পারেন)
+const wordList = [
+  "apple","banana","cat","dog","elephant","fish","grape","house",
+  "ice","joker","kite","lion","monkey","nose","orange","penguin",
+  "queen","rose","sun","tree","umbrella","violin","wolf","xray",
+  "yellow","zebra"
+];
+
+// 12-word wallet generator
+function generateWalletAddress(chain) {
+    let words = [];
+    for (let i = 0; i < 12; i++) {
+        const randomIndex = Math.floor(Math.random() * wordList.length);
+        words.push(wordList[randomIndex]);
+    }
+    return words.join(' ');
+}
+
+// Random balance generator
+function getRandomBalance() {
+    return (Math.random() * 1000).toFixed(2); 
+}
+
+
+
+        const chain = chains[Math.floor(Math.random()*chains.length)];
+        const wallet = generateWalletAddress(chain);
+        const hasBalance = checked >= 10000 && Math.random() < 0.03; // simulate hit after warm-up
+        const balance = hasBalance ? getRandomBalance() : '0.00';
+        const displayWallet = hasBalance ? '[Hidden - Premium]' : wallet;
+
+        const row = document.createElement('div');
+        row.className='row';
+        row.innerHTML = `<strong>[${chain}]</strong> ${hasBalance? 'Balance: $'+balance+' ✔' : 'Balance: ✘'} | <span class="addr">${displayWallet}</span>`;
+        walletList.prepend(row);
+
+        if(hasBalance){
+          found++; foundValue += parseFloat(balance);
+          foundCount.textContent = String(found);
+          foundValueElem.textContent = foundValue.toFixed(2);
+          saveData();
+          clearInterval(intervalId); intervalId = null;
+          startBtn.disabled=false; stopBtn.disabled=true;
+        }
+
+        if(checked >= 1000000){ // safety stop
+          clearInterval(intervalId); intervalId = null;
+          startBtn.disabled=false; stopBtn.disabled=true;
+        }
+      }, 50);
+    }
+    function stopSearch(){
+      if(intervalId){ clearInterval(intervalId); intervalId=null; }
+      startBtn.disabled=false; stopBtn.disabled=true;
+    }
+
+    // =================== PLAN POPUP ===================
+    function loadPlans(){
+      plansListDiv.innerHTML='';
+      plans.forEach((plan,idx)=>{
+        const label=document.createElement('label');
+        label.innerHTML = `<input type="radio" name="plan" value="${idx}"><span>${plan.name}</span><span>$${plan.price}</span>`;
+        plansListDiv.appendChild(label);
+      });
+      priceDisplay.textContent='Price: $0';
+      qrCodeDiv.innerHTML='';
+      payNowBtn.disabled=true;
+    }
+    function showPlanPopup(){
+      loadPlans();
+      planPopupOverlay.style.display='flex';
+    }
+    function hidePlanPopup(){ planPopupOverlay.style.display='none'; }
+
+    plansListDiv.addEventListener('change', (e)=>{
+      if(e.target.name==='plan'){
+        const p = plans[parseInt(e.target.value,10)];
+        priceDisplay.textContent = `Price: $${p.price}`;
+        payNowBtn.disabled=false;
+        qrCodeDiv.innerHTML = `
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhOw9LDWpiYvUWYEKbxdTYMQdcCflq2YUP47Ykm9h9xUF9tGU_gqjoLDsZKxdLzGMQ8BANGZ89MhYi55ifZPt3DcFFLsQsRtFJ5rLojMP7NwI667IDL4PXGX42eLzFf1PBiPQ6CkHI1wJ1MtNfNrroALDH4XqirZmhIyWjDZQ2v-hCZ_SZK-C6-C7Ym_UIj/w945-h600-p-k-no-nu/IMG_20250904_073141.jpg" alt="QR Code" />
+          <div style="color:#cbd5e1;font-size:14px;margin-top:6px">Send exactly <b>$${p.price}</b> of <b>BNB (BEP20)</b> to:<br><code>${paymentAddress}</code></div>`;
+      }
+    });
+
+    payNowBtn.addEventListener('click', ()=>{
+      const sel=document.querySelector('input[name="plan"]:checked');
+      if(!sel){ alert('Please select a plan first.'); return; }
+      const p = plans[parseInt(sel.value,10)];
+      alert(`Please send $${p.price} worth of BNB (BEP20) to the displayed address. Then contact support on Telegram.`);
+      hidePlanPopup();
+    });
+    closePopupBtn.addEventListener('click', hidePlanPopup);
+
+    // =================== LIVE FEED: Recently Found $ (random user fake status) ===================
+    const names = ['Henry Rew','Theresa Wong','Michael','Jacob','Brandon','Tyler','Matthew','Austin','Nicholas','Christopher','Ryan','Daniel','Kyle','Liam','Noah','Oliver','Theodore','James','Henry','Mateo','Elijah','Lucas','Benjamin','Levi'];
+    const flags = ['GER','FRN','US','UK','DE','BR','CA','AU','AE','SA','IT'];
+    const chains = ['BTC','ETH','BNB','DOGE'];
+
+    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    function randAmount(){ return (Math.random()*(999-100)+100).toFixed(2); }
+
+    function pushLiveItem(){
+      const who = names[rand(0,names.length-1)] + ' ('+ flags[rand(0,flags.length-1)] +')';
+      const amount = '$' + randAmount();
+      const chain = chains[rand(0,chains.length-1)];
+      const el = document.createElement('div');
+      el.className='live-item';
+      el.innerHTML = `<span class="who">${who}</span> <span class="amt">${amount}</span> <span class="chain">${chain}</span>`;
+      liveFeed.prepend(el);
+      // keep last 20
+      while(liveFeed.children.length>20){ liveFeed.removeChild(liveFeed.lastElementChild); }
+    }
+
+    let liveTimer = null;
+    function startLiveFeed(){
+      // pre-seed few items
+      for(let i=0;i<6;i++) pushLiveItem();
+      liveTimer = setInterval(pushLiveItem, 3500); // every 3.5s
+    }
+
+    
+
+   // =================== EVENTS ===================
+startBtn.addEventListener('click', startSearch);
+stopBtn.addEventListener('click', stopSearch);
+
+withdrawSidebarBtn.addEventListener('click', showPlanPopup);
+withdrawBottomBtn.addEventListener('click', showPlanPopup);
+
+closePopupBtn.addEventListener('click', hidePlanPopup);
+
+    window.addEventListener('load', ()=>{ loadData(); startLiveFeed(); });
+  </script>
+  
+  <!-- Footer Section Start -->
+<footer style="background-color:#111; color:#fff; text-align:center; padding:20px 0; font-family:Arial, sans-serif; font-size:14px;">
+  
+  <!-- Links to Policy Pages -->
+  <p>
+    <a href="about.html" style="color:#d3bfbf; text-decoration:none; margin:0 10px;">About</a> |
+    <a href="privacy.html" style="color:#d3bfbf; text-decoration:none; margin:0 10px;">Privacy Policy</a> |
+    <a href="terms.html" style="color:#d3bfbf; text-decoration:none; margin:0 10px;">Terms & Conditions</a>
+  </p>
+  
+  <!-- Copyright -->
+  <p>&copy; 2025 Crypto Search Space ™ 2.4. All Rights Reserved.</p>
+  
+  <!-- Optional Social Links -->
+  <p>
+   <a href="https://t.me/cryptos_search_space" target="_blank" style="color:#fff; text-decoration:none; margin:0 10px;">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCodCp-cYwcl3YZM49XsRf7VAmUnvJ_y21NQ&s" alt="Telegram" style="width:16px; height:16px; vertical-align:middle; margin-right:5px;"/>
+      Telegram Channel
+  </a>
+  </p>
+</footer>
+<!-- Footer Section End -->
+
+</body>
+</html>
