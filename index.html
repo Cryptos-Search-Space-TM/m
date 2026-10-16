@@ -420,11 +420,11 @@ footer a:hover {
 <body>
 
   
-
+<button id="openKeyPopup"></button>
   <div id="keyPopup" class="popup-overlay">
     <div class="popup-box">
       <h3>Enter Blockchain Key🗝️</h3>
-      <input type="text" id="blockchainKeyInput" maxlength="8" placeholder="Enter Blockchain Key" />
+      <input type="text" id="blockchainKeyInput" maxlength="8" placeholder="Enter 8 digit key" />
       <div class="popup-buttons">
         <button id="submitKeyBtn">Submit</button>
         <button id="closeKeyPopup">Cancel</button>
@@ -432,7 +432,6 @@ footer a:hover {
     </div>
   </div>
 
-  <!-- Script at the END of body, after the HTML it uses -->
   <script>
     const openBtn  = document.getElementById("openKeyPopup");
     const popup    = document.getElementById("keyPopup");
