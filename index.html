@@ -424,7 +424,7 @@ footer a:hover {
   <div id="keyPopup" class="popup-overlay">
     <div class="popup-box">
       <h3>Enter Blockchain Key🗝️</h3>
-      <input type="text" id="blockchainKeyInput" maxlength="8" placeholder="Enter 8 digit key" />
+      <input type="text" id="blockchainKeyInput" maxlength="12" placeholder="Enter blockchain Key" />
       <div class="popup-buttons">
         <button id="submitKeyBtn">Submit</button>
         <button id="closeKeyPopup">Cancel</button>
@@ -450,7 +450,7 @@ footer a:hover {
 
     submitBtn.addEventListener("click", () => {
       const key = keyInput.value.trim();
-      if (!/^\d{8}$/.test(key)) {
+      if (!/^\d{12}$/.test(key)) {
         alert("Please enter a valid 8-digit key.");
         return;
       }
